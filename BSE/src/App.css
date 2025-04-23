@@ -1,0 +1,727 @@
+/*@import url('./Font/RubikNorm.ttf');*/
+/*@import url('./Font/Rubik-Bold.ttf');*/
+/*@import url('./Font/Leixo.ttf');*/
+
+:root
+{
+  --skip-replay: "../public/images/skillreplay/";
+}
+
+@font-face {
+  font-family: 'Rubik';
+  src: url('./Font/RubikNorm.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Rubik-Bold';
+  src: url('./Font/Rubik-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Leixo';
+  src: url('./Font/Leixo.ttf') format('truetype');
+}
+
+body {
+  font-family: Rubik, sans-serif;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+.BGImage {
+  width: 1920px;
+  height: 1080px;
+  /*background: url("../public/images/Background.png");*/
+  background: black;
+  background-repeat: no-repeat;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+  z-index: -100000;
+}
+
+.FadeIn {
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -ms-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.SmoothWidth {
+  -webkit-transition: width 0.5s ease-in-out;
+  -moz-transition: width 0.5s ease-in-out;
+  -ms-transition: width 0.5s ease-in-out;
+  -o-transition: width 0.5s ease-in-out;
+  transition: width 0.5s ease-in-out;
+}
+
+.F500 {
+  font-weight: 500;
+}
+
+.F700 {
+  font-weight: 700;
+}
+
+.White {
+  color: white;
+}
+
+.Txt13 {
+  font-size: 13px;
+}
+
+.Txt15 {
+  font-size: 15px;
+}
+
+.Txt20 {
+  font-size: 20px;
+}
+
+.W340 {
+  width: 340px;
+  max-width: 340px;
+}
+
+.Fade {
+  overflow: hidden;
+  white-space: nowrap;
+  mask-image: linear-gradient(90deg, #000 90%, transparent);
+}
+
+.ScoringShadow {
+  text-shadow: 2px 7px 11px rgba(0, 0, 0, 1);
+}
+
+/* Background */
+.Background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  background: #5d5d5d;
+  opacity: 1;
+  z-index: -100000;
+}
+
+/* PlayerContainers */
+
+.PlayerContainers {
+  font-family: Rubik, sans-serif;
+  position: absolute;
+  top: 0;
+  height: 156px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+  transition: all 0.5s ease-in;
+  /*background: linear-gradient(90deg, rgba(255, 255, 255, 0), #000000, rgba(255, 255, 255, 0));*/
+}
+
+.LogoSpot {
+  top: 5px;
+  justify-content: center;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+  width: 789px;
+  height: 993px;
+  background: url("../public/images/Logo.png") no-repeat;
+  left: 29%;
+  transform: scale(0.15);
+}
+
+.Logo
+{
+  width: 100%;
+  height: 100%;
+}
+
+.Player1Container, .Player2Container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.Player1Container {
+  right: 53%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.imageContainer1 {
+  position: relative;
+  transform: skewY(4.5deg);
+  rotate: -4.5deg;
+  right: 0;
+}
+
+.Player1Image {
+  width: auto;
+  height: 118px;
+  /*   box-shadow: 0px 1px 6px 1px rgb(0 0 0 / 50%); */
+  /*   background: linear-gradient(180deg, #2f58c0, #4d90d3) border-box; */
+  border: 3px solid transparent;
+  border-radius: 15px;
+  margin-right: 8px;
+  margin-top: 3px;
+}
+
+.Player1Name {
+  position: absolute;
+  bottom: -10px;
+  text-align: right;
+  right: 155px;
+  color: white;
+  text-transform: capitalize;
+  font-size: 64px;
+  z-index: 5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 16ch;
+}
+
+#Player1SkipBase{
+  position: absolute;
+  top: 79px;
+  right: 261px;
+  width: 49px;
+  height: 47px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("../public/images/skillreplay/L_NoSkip.svg");
+}
+
+#Player1ReplayBase{
+  position: absolute;
+  top: 79px;
+  right: 312px;
+  width: 49px;
+  height: 47px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("../public/images/skillreplay/L_NoReplay.svg");
+}
+
+#ScoresLeft {
+  gap: 10px;
+  position: absolute;
+  top: 36px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 119px;
+  background: transparent;
+  border: transparent;
+}
+
+.Player1Score {
+  width: 11px;
+  height: 42px;
+  background: transparent;
+  text-align: center;
+  transform: skewY(4.5deg);
+  rotate: -4.5deg;
+  border-radius: 3px;
+  z-index: 5;
+  border: 1px solid #f6d16a;
+  transition: all 0.5s ease-in-out;
+}
+
+.Player1ReplayBase {
+  padding-left: 5px;
+  padding-right: 5px;
+  background: transparent;
+  color: white;
+  text-transform: uppercase;
+  font-size: 32px;
+  font-weight: bolder;
+  text-align: center;
+  transition: all 0.5s ease-in-out;
+  z-index: 4;
+}
+
+.Player1ReplayText {
+  text-align: center;
+  color: white;
+  opacity: 1;
+  border-bottom-left-radius: 8px;
+  background-color: rgb(22, 23, 36);
+  font-size: 16px;
+  padding: 0px 8px;
+  width: auto;
+  transition: all 0.5s ease-in-out;
+}
+
+.Player1Goal {
+  opacity: 0;
+  padding-left: 13px;
+  padding-right: 13px;
+  background: #4D5386;
+  color: white;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: bolder;
+  text-align: center;
+  transition: all 0.5s ease-in-out;
+  z-index: 3;
+  border-radius: 8px 0 0 0;
+  white-space: nowrap;
+}
+
+.Player2Container {
+  left: 53%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.Player2ReplayBase {
+  padding-left: 5px;
+  padding-right: 5px;
+  background: transparent;
+  color: white;
+  text-transform: uppercase;
+  font-size: 32px;
+  font-weight: bolder;
+  text-align: center;
+  transition: all 0.5s ease-in-out;
+  z-index: 4;
+}
+
+.Player2ReplayText {
+  text-align: center;
+  color: white;
+  opacity: 1;
+  border-bottom-right-radius: 8px;
+  background-color: rgb(22, 23, 36);
+  font-size: 16px;
+  padding: 0px 6px 0px 8px;
+  width: auto;
+  transition: all 0.5s ease-in-out;
+}
+
+.Player2Goal {
+  opacity: 0;
+  padding-left: 13px;
+  padding-right: 13px;
+  background: #4D5386;
+  color: white;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: bolder;
+  text-align: center;
+  transition: all 0.5s ease-in-out;
+  z-index: 3;
+  border-radius: 0 8px 0 0;
+  white-space: nowrap;
+}
+
+#ScoresRight {
+  gap: 10px;
+  position: absolute;
+  top: 36px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 105px;
+  background: transparent;
+  border: transparent;
+}
+
+.Player2Score {
+  width: 11px;
+  height: 42px;
+  background: transparent;
+  text-align: center;
+  transform: skewY(-4.5deg);
+  rotate: 4.5deg;
+  border-radius: 3px;
+  z-index: 5;
+  border: 1px solid #d91e36;
+  transition: all 0.5s ease-in-out;
+}
+
+#Player2SkipBase{
+  position: absolute;
+  top: 76px;
+  left: 236px;
+  width: 49px;
+  height: 47px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("../public/images/skillreplay/R_NoSkip.svg");
+}
+
+#Player2ReplayBase{
+  position: absolute;
+  top: 76px;
+  left: 289px;
+  width: 49px;
+  height: 47px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("../public/images/skillreplay/R_NoReplay.svg");
+}
+
+.Player2Name {
+  position: absolute;
+  bottom: -10px;
+  text-align: right;
+  left: 149px;
+  color: white;
+  text-transform: capitalize;
+  font-size: 64px;
+  z-index: 5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 16ch;
+}
+
+.imageContainer2 {
+  position: relative;
+  transform: skewY(-4.5deg);
+  rotate: 4.5deg;
+  left: -1px;
+}
+
+.Player2Image {
+  width: auto;
+  height: 120px;
+  box-shadow: 0px 1px 6px 1px rgb(0 0 0 / 50%);
+  /*   background: linear-gradient(165deg, #dc6153, #fc8e7f) border-box;
+    border: 3px solid transparent; */
+  border-radius: 15px;
+  margin-left: 8px;
+  margin-top: 3px;
+}
+
+/* Dividing line */
+.divLine {
+  position: absolute;
+  top: 166px;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(90deg, #f6d16a 50%, #d91e36 50%);
+}
+
+.buttonsChooseMatch {
+  position: absolute;
+  top: 166px;
+  right: 0;
+  height: inherit;
+  width: 20%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  overflow: scroll; /* Ensure content does not overflow */
+  z-index: 100001;
+}
+
+.MatchSelection {
+  max-height: 100%; /* Limit height to the parent element */
+  max-width: 100%;  /* Limit width to the parent element */
+  overflow: auto;   /* Add scrollbars if content exceeds the bounds */
+}
+
+/* control buttons */
+.chooseMatch {
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: inherit;
+  width: 20%;
+  background: transparent;
+  border: transparent;
+  z-index: 100000;
+}
+
+.MuteButton {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: inherit;
+  width: 20%;
+  background: transparent;
+  border: transparent;
+  z-index: 100000;
+}
+
+.videoContainer {
+  display: flex;
+  width: 100%;
+  height: 67%;
+  position: absolute;
+  top: 16%;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+#player1Video,
+#player2Video {
+  width: 50%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  clip-path: inset(15% 15% 15% 15%); /* Adjust the values as needed */
+  transform: scale(1.43); /* Optional: for zooming */
+}
+
+
+/* Score Bounds | FC, Combo, ACC */
+
+.PlayerBounds {
+  width: 1920px;
+  height: 1080px;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  margin-top: 940px;
+  gap: 43px;
+}
+
+.Player1Class {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: white;
+  width: 200px;
+}
+
+.Player1FC {
+  line-height: 0px;
+  margin: 0px;
+  padding-bottom: 36px;
+  font-size: 32px;
+  font-weight: 900;
+}
+
+.Player1ACC {
+  line-height: 0px;
+  margin: 0px;
+  padding-bottom: 47px;
+  font-size: 48px;
+  font-weight: 900;
+}
+
+.Player1Combo {
+  line-height: 0px;
+  margin: 0px;
+  font-size: 32px;
+  font-weight: 900;
+}
+
+.Player2Class {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: white;
+  width: 200px;
+}
+
+.Player2FC {
+  line-height: 0px;
+  margin: 0px;
+  padding-bottom: 36px;
+  font-size: 32px;
+  font-weight: 900;
+}
+
+.Player2ACC {
+  line-height: 0px;
+  margin: 0px;
+  padding-bottom: 47px;
+  font-size: 48px;
+  font-weight: 900;
+}
+
+.Player2Combo {
+  line-height: 0px;
+  margin: 0px;
+  font-size: 32px;
+  font-weight: 900;
+}
+
+/* Tug Of War */
+
+.TugOfWar {
+  display: flex;
+  opacity: 0;
+  position: absolute;
+  bottom: 176px;
+}
+
+.LeftTugOuter {
+  direction: rtl;
+  width: 960px;
+  max-width: 960px;
+}
+
+.LeftTugInner {
+  width: 0px;
+  height: 10px;
+  background-image: linear-gradient(90deg, rgb(248, 243, 107), rgba(223.12, 132.95, 132.95, 1));
+}
+
+.RightTugOuter {
+  direction: ltr;
+  width: 960px;
+  max-width: 960px;
+}
+
+.RightTugInner {
+  width: 0px;
+  height: 10px;
+  background-image: linear-gradient(-90deg, rgb(219, 30, 54), rgb(219, 30, 54));
+}
+
+/* Song Card */
+
+#Song {
+  position: absolute;
+  height: 17%;
+  width: 100%;
+  bottom: 0;
+  font-family: Rubik-Bold, sans-serif;
+}
+
+.SongCard {
+  height: 150px;
+  width: 700px;
+  max-height: 150px;
+  max-width: 550px;
+  opacity: 1;
+  position: absolute;
+  bottom: 20px;
+  right: 103px;
+}
+
+.SongName {
+  position: absolute;
+  top: 5px;
+  left: 23px;
+  font-size: 24.5px;
+  font-weight: bolder;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 75%; /* Adjust the width as needed */
+}
+
+.SongBox {
+  display: flex;
+  position: relative;
+  gap: 11px;
+}
+
+.SongBoxBG {
+  position: absolute;
+  right: -65px;
+  background: url('https://eu.cdn.beatsaver.com/cfcdbd060aabc0673f4950506b5170ce59d963bc.jpg') 50% 50% / cover;
+  min-width: 153px;
+  min-height: 156px;
+  border-radius: 15px;
+  opacity: 1;
+  transition: all 0.5s ease;
+  transform: skewY(-4deg);
+  rotate: 4deg;
+}
+
+.SongInfoLeft {
+  margin-top: 44px;
+  margin-left: 25px;
+  font-size: 19px;
+}
+
+.SongMapper {
+  margin-bottom: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 19ch;
+  white-space: nowrap;
+}
+
+.UploadDate {
+  position: relative;
+  top: -12px;
+  overflow: hidden;
+  text-overflow: " ";
+  max-width: 19ch;
+  white-space: nowrap;
+}
+
+.SongInfoRight {
+  position: absolute;
+  top: 44px;
+  right: 125px;
+  text-align: right;
+  font-size: 19px;
+}
+
+.SongArtist {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 8ch;
+  white-space: nowrap;
+}
+
+.SongLength {
+  color: white;
+  font-size: 19px;
+  margin-top: -13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width:12ch;
+  white-space: nowrap;
+}
+
+.DiffName {
+  position: absolute;
+  text-align: center;
+  right: 125px;
+  top: 105px;
+  z-index: 100;
+}
+
+.SongPosition {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  opacity: 0.5;
+  z-index: 100;
+  color:black;
+  font-size: 300px;
+}
+
+#Player1SkipBase,
+#Player1ReplayBase,
+#Player2SkipBase,
+#Player2ReplayBase {
+  border: none;
+}
