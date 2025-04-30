@@ -1,30 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 // import all handles
-import { setPlayerInfo } from './js/MainHandlers.js';
-import './js/FormatHandlers.js';
-import { getMap } from './js/MapHandlers.js';
-import { resetAllPlayers, scoreUpdate, userWinScore, handleSkip, handleReplay } from "./js/UserScoringHandlers";
-
-import { setOverlay } from './js/OverlayHandlers.js';
+import {playerIDs, setPlayerInfo} from './handlers/MainHandlers.js';
+import './handlers/FormatHandlers.js';
+import { getMap } from './handlers/MapHandlers.js';
+import { resetAllPlayers, scoreUpdate, userWinScore, handleSkip, handleReplay } from "./handlers/UserScoringHandlers";
+import { setOverlay } from './handlers/OverlayHandlers.js';
+import { useHlsPlayer} from "./handlers/HlsPlayerHandlers";
 
 // TA client thingy
 import { Tournament, Match, User_ClientTypes } from 'moons-ta-client';
 import { useTAClient } from './useTAClient';
 
-// Ensure Twitch is available globally
-declare global {
-  interface Window {
-    Twitch: any;
-    switchAudio: () => void;
-    setPlayerChannels: (player1Channel: string, player2Channel: string) => void;
-  }
-}
-
 let currentMatch: Match;
 
 function App() {
+  // const player1VideoRef = useRef<HTMLDivElement>(null);
+  // const player2VideoRef = useRef<HTMLDivElement>(null);
+  //
+  // console.log("Setting up HLS player");
+  // if(!player1VideoRef.current || !player2VideoRef.current) {
+  //   const video1 = document.createElement('video');
+  //   video1.controls = true;
+  //   video1.style.width = '100%';
+  //   player1VideoRef.current?.appendChild(video1);
+  //
+  //   const video2 = document.createElement('video');
+  //   video2.controls = true;
+  //   video2.style.width = '100%';
+  //   player2VideoRef.current?.appendChild(video2);
+  //
+  //   useHlsPlayer(video1, `https://stream.beatkhana.com/live/${playerIDs[0]}.m3u8`);
+  //   useHlsPlayer(video2, `https://stream.beatkhana.com/live/${playerIDs[1]}.m3u8`);
+  //
+  // }
+  
   const handleButton = (player: any, action: any) => {
     if (action === "skip") {
       console.log("Player " + player + " skipped");
@@ -108,64 +119,9 @@ function App() {
 
     setSelectableMatches(selectableMatches);
   }
-
-  React.useEffect(() => {
-    const loadTwitchScript = () => {
-      return new Promise((resolve, reject) => {
-        if (document.getElementById('twitch-embed-script')) {
-          return;
-        }
-        const script = document.createElement('script');
-        script.id = 'twitch-embed-script';
-        script.src = "https://player.twitch.tv/js/embed/v1.js";
-        script.async = true;
-        script.onload = resolve;
-        script.onerror = reject;
-        document.body.appendChild(script);
-      });
-    };
-
-    const initializeTwitchPlayers = () => {
-      const player1 = new window.Twitch.Embed("player1Video", {
-        width: "120%",
-        height: "120%",
-        channel: "yetanotherbt",
-        layout: "video",
-        autoplay: true,
-        muted: false,
-        parent: [window.location.hostname]
-      });
-
-      const player2 = new window.Twitch.Embed("player2Video", {
-        width: "120%",
-        height: "120%",
-        channel: "yetanotherbt",
-        layout: "video",
-        autoplay: true,
-        muted: true,
-        parent: [window.location.hostname]
-      });
-
-      // Function to switch audio between players
-      function switchAudio() {
-        const isPlayer1Muted = player1.getMuted();
-        player1.setMuted(!isPlayer1Muted);
-        player2.setMuted(isPlayer1Muted);
-      }
-
-      function setPlayerChannels(player1Channel: string, player2Channel: string) {
-        player1.setChannel(player1Channel);
-        player2.setChannel(player2Channel);
-      }
-
-      window.setPlayerChannels = setPlayerChannels;
-      window.switchAudio = switchAudio;
-    };
-
-    // loadTwitchScript().then(initializeTwitchPlayers).catch((error) => {
-    //   console.error("Failed to load Twitch script:", error);
-    // });
-
+  
+  useEffect(() => {
+    
     console.log("Subscribing to TA client events");
 
     const unsubscribeFromTAConnected = taHook.subscribeToTAConnected(() => {
@@ -243,8 +199,8 @@ function App() {
         <div className="PlayerContainers" id="PlayerContainers">
           <div className="Player1Container" id="Player1Container">
             <p className="Player1Name" id="Player1Name">OK</p>
-            <button className="Player1SkipBase" id="Player1SkipBase"
-              onClick={(e) => handleButton(0, "skip")}></button>
+            {/*<button className="Player1SkipBase" id="Player1SkipBase"*/}
+            {/*  onClick={(e) => handleButton(0, "skip")}></button>*/}
             <button className="Player1ReplayBase" id="Player1ReplayBase"
               onClick={(e) => handleButton(0, "replay")}></button>
             <button className="Scores" id="ScoresLeft"
@@ -269,8 +225,8 @@ function App() {
               <div className="Player2Score" id="Player2Score1"></div>
               <div className="Player2Score" id="Player2Score2"></div>
             </button>
-            <button className="Player2SkipBase" id="Player2SkipBase"
-              onClick={(e) => handleButton(1, "skip")}></button>
+            {/*<button className="Player2SkipBase" id="Player2SkipBase"*/}
+            {/*  onClick={(e) => handleButton(1, "skip")}></button>*/}
             <button className="Player2ReplayBase" id="Player2ReplayBase"
               onClick={(e) => handleButton(1, "replay")}></button>
             <p className="Player2Name" id="Player2Name">BOOMER</p>
@@ -311,17 +267,17 @@ function App() {
             ))}
           </span>
 
-          <button className={"MuteButton"} id={"MuteButton"} onClick={() => {
-            console.log("Mute button pressed");
-            window.switchAudio();
-          }}></button>
+          {/*<button className={"MuteButton"} id={"MuteButton"} onClick={() => {*/}
+          {/*  console.log("Mute button pressed");*/}
+          {/*  window.switchAudio();*/}
+          {/*}}></button>*/}
 
         </div>
 
         {/* Streams */}
         <div className="videoContainer">
-          <div id="player1Video"></div>
-          <div id="player2Video"></div>
+          {/*<div id="player1Video" ref={player1VideoRef}></div>*/}
+          {/*<div id="player2Video" ref={player2VideoRef}></div>*/}
         </div>
 
         {/*Player scores*/}
