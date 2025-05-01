@@ -22,6 +22,11 @@
   src: url('./Font/Leixo.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Inter';
+  src: url('./Font/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+}
+
 body {
   font-family: Rubik, sans-serif;
   overflow: hidden;
@@ -150,11 +155,22 @@ body {
   position: absolute;
   display: flex;
   align-items: center;
-  margin-top: 16px;
+  margin-top: 2px;
+  color: white;
+  font-family: "Inter Semi Bold", sans-serif;
+  text-transform: capitalize;
+  font-size: 72px;
+  font-weight: bold;
+}
+
+.Player1Score, .Player1Name, .Player2Score, .Player2Name {
+  height: 91px;
+  display: flex;
+  align-items: center;
 }
 
 .Player1Container {
-  right: 53%;
+  right: 56%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -171,64 +187,48 @@ body {
   width: auto;
   height: 140px;
   /*   box-shadow: 0px 1px 6px 1px rgb(0 0 0 / 50%); */
-  background: linear-gradient(165deg, #dc6153, #fc8e7f) border-box;
+  background: #EA2020 border-box;
   border: 3px solid transparent;
   border-radius: 15px;
-  margin-right: 8px;
-  margin-top: 3px;
-}
-
-.Player1Name {
-  position: absolute;
-  text-align: right;
-  right: 155px;
-  color: white;
-  text-transform: capitalize;
-  font-size: 64px;
-  z-index: 5;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 16ch;
-}
-
-#Player1ReplayBase{
-  position: absolute;
-  top: 79px;
-  right: 300px;
-  width: 49px;
-  height: 47px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: url("../public/images/skillreplay/L_NoReplay.svg");
-}
-
-#ScoresLeft {
-  gap: 10px;
-  position: absolute;
-  top: 36px;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  right: 129px;
-  background: transparent;
-  border: transparent;
+  margin-right: 6px;
+  margin-top: 20px;
 }
 
 .Player1Score {
-  min-width: 48px;
-  background: #2C3050;
-  color: white;
-  text-transform: uppercase;
-  font-size: 33px;
-  font-weight: bolder;
-  text-align: center;
-  z-index: 5;
+  background-color: #C11111;
+  border-color: transparent;
+  padding-left: 4px;
+  padding-right: 4px;
   border-radius: 8px 0 0 8px;
-  transition: all 0.5s ease-in-out;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  z-index: 5;
+  transform: skewY(4.5deg);
+  rotate: -4.5deg;
+}
+
+/*TODO: Account for long names*/
+.Player1Name {
+  background-color: #EA2020;
+  margin-right: 18px;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 0 8px 8px 0;
+  z-index: 5;
+  transform: skewY(4.5deg);
+  rotate: -4.5deg;
+}
+
+#Player1ReplayBase{
+  margin-right: 26px;
+  width: 60px;
+  height: 57px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("../public/images/skillreplay/L_NoReplay.svg") no-repeat;
 }
 
 .Player1ReplayBase {
@@ -273,10 +273,63 @@ body {
 }
 
 .Player2Container {
-  left: 53%;
+  left: 56%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
+
+.imageContainer2 {
+  position: relative;
+  transform: skewY(-4.5deg);
+  rotate: 4.5deg;
+  left: 0;
+}
+
+.Player2Image {
+  width: auto;
+  height: 140px;
+  background: #037EDA border-box;
+  border: 3px solid transparent;
+  border-radius: 15px;
+  margin-left: 6px;
+  margin-top: 20px;
+}
+
+.Player2Name {
+  background-color: #037EDA;
+  margin-left: 18px;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 8px 0 0 8px;
+  z-index: 5;
+  transform: skewY(-4.5deg);
+  rotate: 4.5deg;
+}
+
+.Player2Score {
+  background-color: #1367A5;
+  border-color: transparent;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 0 8px 8px 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  z-index: 5;
+  transform: skewY(-4.5deg);
+  rotate: 4.5deg;
+}
+
+#Player2ReplayBase{
+  margin-left: 26px;
+  width: 60px;
+  height: 57px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("../public/images/skillreplay/R_NoReplay.svg") no-repeat;
 }
 
 .Player2ReplayBase {
@@ -318,77 +371,6 @@ body {
   z-index: 3;
   border-radius: 0 8px 0 0;
   white-space: nowrap;
-}
-
-#ScoresRight {
-  gap: 10px;
-  position: absolute;
-  top: 36px;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  left: 126px;
-  background: transparent;
-  border: transparent;
-}
-
-.Player2Score {
-  width: 11px;
-  height: 42px;
-  background: transparent;
-  text-align: center;
-  transform: skewY(-4.5deg);
-  rotate: 4.5deg;
-  border-radius: 3px;
-  z-index: 5;
-  border: 1px solid #d91e36;
-  transition: all 0.5s ease-in-out;
-}
-
-#Player2ReplayBase{
-  position: absolute;
-  top: 76px;
-  left: 296px;
-  width: 49px;
-  height: 47px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: url("../public/images/skillreplay/R_NoReplay.svg");
-}
-
-.Player2Name {
-  position: absolute;
-  text-align: right;
-  left: 149px;
-  color: white;
-  text-transform: capitalize;
-  font-size: 64px;
-  z-index: 5;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 16ch;
-}
-
-.imageContainer2 {
-  position: relative;
-  transform: skewY(-4.5deg);
-  rotate: 4.5deg;
-  left: -1px;
-}
-
-.Player2Image {
-  width: auto;
-  height: 140px;
-  box-shadow: 0px 1px 6px 1px rgb(0 0 0 / 50%);
-
-  background: linear-gradient(180deg, #2f58c0, #4d90d3) border-box;
-  border-radius: 15px;
-  margin-left: 8px;
-  margin-top: 3px;
 }
 
 /* Dividing line */

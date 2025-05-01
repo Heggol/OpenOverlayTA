@@ -100,24 +100,15 @@ function updateTug() {
 	}
 }
 
-function updateScores(user, score)
+function updateScores(player, score)
 {
-
+	document.getElementById(`Player${player + 1}Score`).innerHTML = score;
 }
 
 function userWinScore(player)
 {
 	playerWinScore[player] += 1;
 	updateScores(player, playerWinScore[player]);
-	// if(playerIDs[0] === player) {
-	// 	playerWinScore[0] += 1;
-	// 	updateScores(0, playerWinScore[0]);
-	// } else if(playerIDs[1] === player) {
-	// 	playerWinScore[1] += 1;
-	// 	updateScores(1, playerWinScore[1]);
-	// } else {
-	// 	console.error("Invalid player ID");
-	// }
 }
 
 function handleSkip(player)
