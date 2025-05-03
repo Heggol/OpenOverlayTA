@@ -93,7 +93,6 @@ export const useTAClient = () => {
 
     useEffect(() => {
         const client = new TAClient();
-
         // client.setAuthToken('eyJhbGciOiJSUzI1NiIsImtpZCI6IjlDMTEwNEJDQTlGRjJCQjMzN0I4MjJBMDI1MkU4QjY0RjQ1MUVEQkMiLCJ4NXQiOiJuQkVFdktuX0s3TTN1Q0tnSlM2TFpQUlI3YnciLCJ0eXAiOiJKV1QifQ.eyJpYXQiOiIxNzQ0MjEzMTQyIiwiZXhwIjoiMjA1OTc0NTk0MiIsInRhOmRpc2NvcmRfaWQiOiIxM2RiNTExOS0xMDY2LTQwMTgtYjU5Ni1hNjBmOTY0MTEwYmEiLCJ0YTpkaXNjb3JkX25hbWUiOiJCU0VfQk9UMSIsInRhOmRpc2NvcmRfYXZhdGFyIjoiIiwiaXNzIjoidGFfc2VydmVyIiwiYXVkIjoidGFfdXNlcnMifQ.rmdm-1knhC6owtGXCg1M9fIhAvBJgLhCmsgEnv_1qv_XrnhwoQqFXQOKX7VtYlijvJFqECPk8tOnCBO_-yVKMxdPbEX-77i16xr8l_kPxI5scHtIAydxsF_9fOMmp0l72o17LA9Z2Zj-4iIC6R-huWpM7_olgXgz2AcAipbSBZy2ExG9ZjSEs8G0wV1E9ETvy2kQver43z-hiqegXI5NqITB-M5SJ9n24Ed4qumirFm7JzIq7O65xumesZDg7rg2M0gRoRU8E8DJgG2BMS0LYLNCapYJ4qUST2c9_ofcVCzreR6liG220_RRXRggitVH4X7znAceN2cR72AYc5mM5Q');
         let isMounted = true;
 
