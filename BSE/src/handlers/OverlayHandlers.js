@@ -1,16 +1,25 @@
 async function getImage(platformID) {
     try {
-        const response = await fetch(`http://api.beatkhana.com/api/getUserByBeatleader/${platformID}`);
+        const response = await fetch(`https://api.beatkhana.com/api/users/${platformID}`);
         if (!response.ok) {
             // new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-            console.log(data[0]);
-            return data[0].avatarurl;
-        } else {
-            // new Error("Invalid response structure");
+        return data.avatarUrl;
+    } catch (error) {
+        console.error("Failed to fetch image:", error);
+        return "./images/Placeholder.png"; // Fallback image
+    }
+}
+
+export async function getGuid(platformID) {
+    try {
+        const response = await fetch(`https://api.beatkhana.com/api/users/${platformID}`);
+        if (!response.ok) {
+            // new Error(`HTTP error! status: ${response.status}`);
         }
+        const data = await response.json();
+        return data.guid;
     } catch (error) {
         console.error("Failed to fetch image:", error);
         return "./images/Placeholder.png"; // Fallback image

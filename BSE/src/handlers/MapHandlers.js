@@ -64,15 +64,32 @@ async function getMap(LevelId, LevelDiff) {
 				document.getElementById("SongCard").style.background = `url('${diffBG}') no-repeat center center / contain`;
 				document.getElementById("SongArtist").innerText = data.metadata.levelAuthorName.replaceAll('/n', '').replaceAll('/r', '');
 				document.getElementById("SongName").innerText = data.metadata.songName.replaceAll('/n', '').replaceAll('/r', '');
-				document.getElementById("SongMapper").innerText = data.metadata.songAuthorName.replaceAll('/n', '').replaceAll('/r', '');
-				// document.getElementById("MapKey").innerText = data.id.replaceAll('/n', '').replaceAll('/r', '');
+				document.getElementById("SongMapper").innerText = data.uploader.name.replaceAll('/n', '').replaceAll('/r', '');
 				// document.getElementById("SongBPM").innerText = Math.floor(data.metadata.bpm);
-				// document.getElementById("SongLength").innerText = fancyTimeFormat(data.metadata.duration).replaceAll('/n', '').replaceAll('/r', '');
+				document.getElementById("SongLength").innerText = fancyTimeFormat(data.metadata.duration).replaceAll('/n', '').replaceAll('/r', '');
+				document.getElementById("MapKey").innerText = "#" + data.id.replaceAll('/n', '').replaceAll('/r', '');
 				const uploadDate = new Date(data.uploaded).toISOString().split('T')[0];
 				document.getElementById("UploadDate").innerText = "Uploaded at " + uploadDate;
 				setTimeout(function () {
 					document.getElementById("SongCard").style.opacity = "1";
 				}, 500);
+
+				// check all text elements are loaded
+				const elements = [
+					document.getElementById("SongArtist"),
+					document.getElementById("SongName"),
+					document.getElementById("SongMapper"),
+					document.getElementById("SongLength"),
+					document.getElementById("MapKey"),
+					document.getElementById("UploadDate")];
+
+				for(const element of elements) {
+					if (element.innerText === "") {
+						console.error("Element not loaded:", element);
+						element.innerText = "-";
+					}
+				}
+
 			}, 500);
 		} catch (error) {
 			console.error(error);

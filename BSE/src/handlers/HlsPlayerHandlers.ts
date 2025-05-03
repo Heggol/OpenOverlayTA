@@ -1,7 +1,7 @@
 import Hls from "hls.js";
 import useLifecycle from "../hooks/useLifecycle";
 
-function createHlsPlayer(videoElement: HTMLVideoElement, streamUrl: string): () => void {
+export function createHlsPlayer(videoElement: HTMLVideoElement, streamUrl: string): () => void {
     let hls: Hls | null = null;
     
     const destroyHls = () => {
@@ -43,6 +43,7 @@ function createHlsPlayer(videoElement: HTMLVideoElement, streamUrl: string): () 
             }
         });
     } else if (videoElement.canPlayType('application/vnd.apple.mpegurl')) {
+        console.error('Video play type not supported');
         videoElement.src = streamUrl;
     } else {
         console.error('HLS is not supported in this browser');
@@ -51,12 +52,12 @@ function createHlsPlayer(videoElement: HTMLVideoElement, streamUrl: string): () 
     return destroyHls;
 }
 
-export function useHlsPlayer(videoElement: HTMLVideoElement, streamUrl: string) {
-    useLifecycle(
-        () => createHlsPlayer(videoElement, streamUrl),
-        () => {
-            // Cleanup logic
-            videoElement.pause();
-        }
-    );
-}
+// export function useHlsPlayer(videoElement: HTMLVideoElement, streamUrl: string) {
+//     useLifecycle(
+//         () => createHlsPlayer(videoElement, streamUrl),
+//         () => {
+//             // Cleanup logic
+//             videoElement.pause();
+//         }
+//     );
+// }

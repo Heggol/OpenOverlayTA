@@ -158,6 +158,10 @@ body {
   height: 91px;
   display: flex;
   align-items: center;
+  max-width: 512px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .Player1Container {
@@ -664,7 +668,7 @@ body {
   white-space: nowrap;
 }
 
-.DiffName {
+.MapKey {
   position: absolute;
   text-align: center;
   right: 140px;
