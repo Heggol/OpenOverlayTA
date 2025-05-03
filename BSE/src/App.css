@@ -1,7 +1,3 @@
-/*@import url('./Font/RubikNorm.ttf');*/
-/*@import url('./Font/Rubik-Bold.ttf');*/
-/*@import url('./Font/Leixo.ttf');*/
-
 :root
 {
   --skip-replay: "../public/images/skillreplay/";
@@ -20,11 +16,6 @@
 @font-face {
   font-family: 'Leixo';
   src: url('./Font/Leixo.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Inter';
-  src: url('./Font/Inter-VariableFont_opsz,wght.ttf') format('truetype');
 }
 
 body {
@@ -129,7 +120,7 @@ body {
   align-items: center;
   opacity: 0;
   transition: all 0.5s ease-in;
-  /*background: linear-gradient(90deg, rgba(255, 255, 255, 0), #000000, rgba(255, 255, 255, 0));*/
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), #000000, rgba(255, 255, 255, 0));
 }
 
 .LogoSpot {
@@ -186,7 +177,6 @@ body {
 .Player1Image {
   width: auto;
   height: 140px;
-  /*   box-shadow: 0px 1px 6px 1px rgb(0 0 0 / 50%); */
   background: #EA2020 border-box;
   border: 3px solid transparent;
   border-radius: 15px;
@@ -444,21 +434,29 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  clip-path: inset(15% 15% 15% 15%); /* Adjust the values as needed */
-  transform: scale(1.43); /* Optional: for zooming */
 }
 
+/* Bottom bar*/
+.BottomBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 16%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 
 /* Score Bounds | FC, Combo, ACC */
 
 .PlayerBounds {
-  width: 1920px;
-  height: 1080px;
+  gap: 10px;
   opacity: 0;
   display: flex;
   justify-content: center;
-  margin-top: 940px;
-  gap: 43px;
+  align-items: center;
 }
 
 .Player1Class {

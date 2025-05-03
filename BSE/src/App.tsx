@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import './App.css';
 
 // import all handles
-import {setPlayerInfo} from './handlers/MainHandlers.js';
+import {playerIDs, setPlayerInfo} from './handlers/MainHandlers.js';
 import './handlers/FormatHandlers.js';
 import {getMap} from './handlers/MapHandlers.js';
-import {handleReplay, handleSkip, resetAllPlayers, scoreUpdate, userWinScore} from "./handlers/UserScoringHandlers";
+import {handleReplay, handleSkip, resetAllPlayers, scoreUpdate} from "./handlers/UserScoringHandlers";
 import {setOverlay} from './handlers/OverlayHandlers.js';
+import {useHlsPlayer} from './handlers/HlsPlayerHandlers';
 
 // TA client thingy
 import {Match, Tournament, User_ClientTypes} from 'moons-ta-client';
@@ -15,25 +16,28 @@ import {useTAClient} from './useTAClient';
 let currentMatch: Match;
 
 function App() {
-	// const player1VideoRef = useRef<HTMLDivElement>(null);
-	// const player2VideoRef = useRef<HTMLDivElement>(null);
-	//
-	// console.log("Setting up HLS player");
-	// if(!player1VideoRef.current || !player2VideoRef.current) {
-	//   const video1 = document.createElement('video');
-	//   video1.controls = true;
-	//   video1.style.width = '100%';
-	//   player1VideoRef.current?.appendChild(video1);
-	//
-	//   const video2 = document.createElement('video');
-	//   video2.controls = true;
-	//   video2.style.width = '100%';
-	//   player2VideoRef.current?.appendChild(video2);
-	//
-	//   useHlsPlayer(video1, `https://stream.beatkhana.com/live/${playerIDs[0]}.m3u8`);
-	//   useHlsPlayer(video2, `https://stream.beatkhana.com/live/${playerIDs[1]}.m3u8`);
-	//
-	// }
+	const player1VideoRef = useRef<HTMLDivElement>(null);
+	const player2VideoRef = useRef<HTMLDivElement>(null);
+
+	console.log("Setting up HLS player");
+	
+	const video1 = document.createElement('video');
+	const video2 = document.createElement('video');
+	
+	useHlsPlayer(video1, `https://stream.beatkhana.com/live/${playerIDs[0]}.m3u8`);
+	useHlsPlayer(video2, `https://stream.beatkhana.com/live/${playerIDs[1]}.m3u8`);
+	
+	if(!player1VideoRef.current || !player2VideoRef.current) {
+	  const video1 = document.createElement('video');
+	  video1.controls = true;
+	  video1.style.width = '100%';
+	  player1VideoRef.current?.appendChild(video1);
+
+	  const video2 = document.createElement('video');
+	  video2.controls = true;
+	  video2.style.width = '100%';
+	  player2VideoRef.current?.appendChild(video2);
+	}
 	
 	const handleButton = (player: any, action: any) => {
 		if (action === "skip") {
@@ -119,6 +123,15 @@ function App() {
 		setSelectableMatches(selectableMatches);
 	}
 	
+	const handleScoreClick = (player: number, isAddition: boolean) => {
+		const scoreElement = document.getElementById(`Player${player}Score`);
+		if (scoreElement) {
+			const currentScore = parseInt(scoreElement.textContent || "0");
+			const newScore = isAddition ? currentScore +1 : currentScore - 1;
+			scoreElement.textContent = Math.max(0, newScore).toString();
+		}
+	};
+	
 	useEffect(() => {
 		
 		console.log("Subscribing to TA client events");
@@ -190,7 +203,7 @@ function App() {
 			unsubscribeFromMatchUpdated();
 			unsubscribeFromMatchDeleted();
 		};
-	}, []);
+	}, [addSelfToMatch, taHook]);
 	
 	return (
 		<body className="BGImage">
@@ -199,14 +212,17 @@ function App() {
 				<div className="Player1Container" id="Player1Container">
 					<button className="Player1ReplayBase" id="Player1ReplayBase"
 					        onClick={(e) => handleButton(0, "replay")}></button>
-                    {/*TODO: Add score decrease (onContextMenu)*/}
-					<button className="Player1Score" id="Player1Score"
-					        onClick={() => userWinScore(0)}>0</button>
+					<div className="Player1Score" id="Player1Score"
+					     onClick={(e) => handleScoreClick(1, true)}
+					     onContextMenu={(e) => {
+						     e.preventDefault();
+						     handleScoreClick(1, false);
+					     }} style={{ cursor: "pointer"}}>0</div>
 					<p className="Player1Name" id="Player1Name">OK</p>
 					{/*<button className="Player1SkipBase" id="Player1SkipBase"*/}
 					{/*  onClick={(e) => handleButton(0, "skip")}></button>*/}
 					<div className="imageContainer1" id="imageContainer1">
-						<img src="./public/images/Placeholder.png" className="Player1Image"
+						<img src="../public/images/Placeholder.png" className="Player1Image"
 						     id="Player1Image"/>
 					</div>
 				</div>
@@ -214,12 +230,16 @@ function App() {
 				</div>
 				<div className="Player2Container" id="Player2Container">
 					<div className="imageContainer2" id="imageContainer2">
-						<img src="./public/images/Placeholder.png" className="Player2Image"
+						<img src="../public/images/Placeholder.png" className="Player2Image"
 						     id="Player2Image"/>
 					</div>
 					<p className="Player2Name" id="Player2Name">BOOMER</p>
-					<button className="Player2Score" id="Player2Score"
-					        onClick={() => userWinScore(1)}>0</button>
+					<div className="Player2Score" id="Player2Score"
+					     onClick={(e) => handleScoreClick(2, true)}
+					     onContextMenu={(e) => {
+						     e.preventDefault();
+						     handleScoreClick(2, false);
+					     }} style={{ cursor: "pointer"}}>0</div>
 					{/*<button className="Player2SkipBase" id="Player2SkipBase"*/}
 					{/*  onClick={(e) => handleButton(1, "skip")}></button>*/}
 					<button className="Player2ReplayBase" id="Player2ReplayBase"
@@ -270,22 +290,8 @@ function App() {
 			
 			{/* Streams */}
 			<div className="videoContainer">
-				{/*<div id="player1Video" ref={player1VideoRef}></div>*/}
-				{/*<div id="player2Video" ref={player2VideoRef}></div>*/}
-			</div>
-			
-			{/*Player scores*/}
-			<div className="PlayerBounds ScoringShadow FadeIn" id="PlayerBounds">
-				<div className="Player1Class" id="Player1Class">
-					<p className="Player1ACC" id="Player1ACC">0.00%</p>
-					<p className="Player1FC" id="Player1FC">FC</p>
-					<p className="Player1Combo" id="Player1Combo">0x</p>
-				</div>
-				<div className="Player2Class" id="Player2Class">
-					<p className="Player2ACC" id="Player2ACC">0.00%</p>
-					<p className="Player2FC" id="Player2FC">FC</p>
-					<p className="Player2Combo" id="Player2Combo">0x</p>
-				</div>
+				<div id="player1Video" ref={player1VideoRef}></div>
+				<div id="player2Video" ref={player2VideoRef}></div>
 			</div>
 			
 			{/*Tug of War*/}
@@ -298,21 +304,40 @@ function App() {
 				</div>
 			</div>
 			
-			<div id="Song">
-				<div className="SongCard FadeIn" id="SongCard">
-					<div className="SongBox">
-						<p className="SongName" id="SongName">Really Long Song name that is...</p>
-						<div className="SongInfoLeft">
-							<p className="SongMapper" id="SongMapper">Mapped by NightHawk</p>
-							<p className="UploadDate" id="UploadDate">Uploaded on 2021-09-01</p>
+			{/*Bottom bar*/}
+			
+			<div className="BottomBar" id="BottomBar">
+				
+				{/*Player scores*/}
+				<div className="PlayerBounds ScoringShadow FadeIn" id="PlayerBounds">
+					<div className="Player1Class" id="Player1Class">
+						<p className="Player1ACC" id="Player1ACC">0.00%</p>
+						<p className="Player1FC" id="Player1FC">FC</p>
+						<p className="Player1Combo" id="Player1Combo">0x</p>
+					</div>
+					<div className="Player2Class" id="Player2Class">
+						<p className="Player2ACC" id="Player2ACC">0.00%</p>
+						<p className="Player2FC" id="Player2FC">FC</p>
+						<p className="Player2Combo" id="Player2Combo">0x</p>
+					</div>
+				</div>
+				
+				<div id="Song">
+					<div className="SongCard FadeIn" id="SongCard">
+						<div className="SongBox">
+							<p className="SongName" id="SongName">Really Long Song name that is...</p>
+							<div className="SongInfoLeft">
+								<p className="SongMapper" id="SongMapper">Mapped by NightHawk</p>
+								<p className="UploadDate" id="UploadDate">Uploaded on 2021-09-01</p>
+							</div>
+							<div className="SongInfoRight">
+								<p className="SongArtist" id="SongArtist">Lauv</p>
+								<p className="SongLength" id="SongLength">3:59</p>
+							</div>
+							<p className="DiffName" id="DiffName">ABC</p>
+							<div className="SongCover" id="SongCover"></div>
+							<div className="SongBoxBG" id="SongBoxBG"></div>
 						</div>
-						<div className="SongInfoRight">
-							<p className="SongArtist" id="SongArtist">Lauv</p>
-							<p className="SongLength" id="SongLength">3:59</p>
-						</div>
-						<p className="DiffName" id="DiffName">ABC</p>
-						<div className="SongCover" id="SongCover"></div>
-						<div className="SongBoxBG" id="SongBoxBG"></div>
 					</div>
 				</div>
 			</div>
