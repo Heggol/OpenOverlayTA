@@ -64,8 +64,20 @@ function App() {
 		let beatkhanaGuid1 = await getGuid(users[0].platformId);
 		let beatkhanaGuid2 = await getGuid(users[1].platformId);
 		
-		createHlsPlayer(video1, `https://stream.beatkhana.com/live/${beatkhanaGuid1}.m3u8`);
-		createHlsPlayer(video2, `https://stream.beatkhana.com/live/${beatkhanaGuid2}.m3u8`);
+		// Create HLS players if video elements exist
+		if (player1VideoRef.current && player2VideoRef.current) {
+			createHlsPlayer(
+				video1,
+				`https://stream.beatkhana.com/live/${beatkhanaGuid1}.m3u8`
+			);
+			
+			createHlsPlayer(
+				video2,
+				`https://stream.beatkhana.com/live/${beatkhanaGuid2}.m3u8`
+			);
+		} else {
+		
+		}
 	}
 	
 	async function addSelfToMatch(playerName: string | undefined, matchID: string | undefined) {
