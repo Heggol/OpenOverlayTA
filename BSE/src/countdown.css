@@ -1,0 +1,16 @@
+#root{
+    background: url("../public/images/cdBackground.png") no-repeat;
+    background-size: cover;
+    opacity: 1;
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    align-content: center;
+}
+
+.countdown-timer {
+    font-family: "Inter Semi Bold", sans-serif;
+    font-size: 8rem; /* Adjust this value to resize the text */
+    text-align: center;
+    user-select: none; /* Prevent text selection */
+}
