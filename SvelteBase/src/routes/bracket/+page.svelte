@@ -1,7 +1,7 @@
 <div class="container">
             <iframe 
                 title="ChalloneBracket"
-                src="https://challonge.com/JanuaryJinx25/module"
+                src="https://challonge.com/bs_elites/module?theme=2&scale_to_fit=1"
                 class="bracket"
                 allowTransparency={true}
                 frameBorder="1"
